@@ -238,9 +238,53 @@ function sectionToSlice(item: PageSectionItem): any {
         ...base,
         slice_type: "page_header",
         variation: "default",
-        primary: { heading: heading1(f.heading), body: richText(f.body) },
+        primary: {
+          heading: heading1(f.heading),
+          body: richText(f.body),
+          image: image(f["image-1"], f.heading || ""),
+        },
         items: [],
       };
+    case "stats": {
+      // The flat Page Sections schema has no repeating-group field, so a stats
+      // row's {value,label} list is JSON-encoded in the plain-text `body`
+      // field instead of a real Webflow group/reference field.
+      let items: { value: string; label: string }[] = [];
+      try {
+        items = f.body ? JSON.parse(f.body) : [];
+      } catch {
+        items = [];
+      }
+      return {
+        ...base,
+        slice_type: "stats",
+        variation: "default",
+        primary: { heading: heading2(f.heading), items },
+        items: [],
+      };
+    }
+    case "gallery": {
+      // Same JSON-in-body trick as stats, for the {url,caption} image list.
+      let rows: { url: string; caption?: string }[] = [];
+      try {
+        rows = f.body ? JSON.parse(f.body) : [];
+      } catch {
+        rows = [];
+      }
+      return {
+        ...base,
+        slice_type: "gallery",
+        variation: "default",
+        primary: {
+          heading: heading2(f.heading),
+          images: rows.map((row) => ({
+            image: image({ url: row.url }, row.caption || ""),
+            caption: row.caption || null,
+          })),
+        },
+        items: [],
+      };
+    }
     default:
       return {
         ...base,
