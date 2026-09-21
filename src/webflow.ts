@@ -113,7 +113,13 @@ async function webflowFetch<T>(path: string): Promise<T> {
 
 function richText(text: string | null): any {
   if (!text) return [];
-  return [{ type: "paragraph", text, spans: [] }];
+  // Body text can hold multiple paragraphs separated by a blank line; a
+  // single string field has no other way to express paragraph breaks.
+  return text
+    .split(/\n\s*\n/)
+    .map((t) => t.trim())
+    .filter(Boolean)
+    .map((t) => ({ type: "paragraph", text: t, spans: [] }));
 }
 
 function heading1(text: string | null): any {
