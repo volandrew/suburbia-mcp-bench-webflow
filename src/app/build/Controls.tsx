@@ -174,7 +174,7 @@ function Option({
           // relative one, so use a plain img instead of routing through it.
           // eslint-disable-next-line @next/next/no-img-element
           <img
-            src={imageField.url}
+            src={imageField.url ?? undefined}
             className="pointer-events-none h-full w-full rounded-full object-cover"
             alt=""
           />
