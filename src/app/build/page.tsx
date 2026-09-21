@@ -4,12 +4,17 @@ import { Heading } from "@/components/Heading";
 import { Logo } from "@/components/Logo";
 import Link from "next/link";
 import React from "react";
+import dynamic from "next/dynamic";
 
 import { CustomizerControlsProvider } from "./context";
-import Preview from "./Preview";
 import { asImageSrc } from "@prismicio/client";
 import Controls from "./Controls";
 import Loading from "./Loading";
+
+// react-three-fiber's WebGL Canvas has no safe SSR path on Cloudflare Workers
+// (the edge runtime lacks the APIs it touches during server render, unlike
+// Node.js on Vercel) — force this to client-only rendering.
+const Preview = dynamic(() => import("./Preview"), { ssr: false });
 
 type SearchParams = {
   wheel?: string;
