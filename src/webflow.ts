@@ -101,7 +101,10 @@ async function webflowFetch<T>(path: string): Promise<T> {
       Authorization: `Bearer ${token}`,
       "accept-version": "2.0.0",
     },
-    next: { revalidate: 60 },
+    // Every route here is already force-dynamic, so there's no static-render
+    // benefit to caching this — fetch fresh every request so a CMS publish
+    // shows up immediately instead of within the old 60s window.
+    cache: "no-store",
   });
 
   if (!res.ok) {
