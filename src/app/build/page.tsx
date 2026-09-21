@@ -6,7 +6,6 @@ import Link from "next/link";
 import React from "react";
 
 import { CustomizerControlsProvider } from "./context";
-import { asImageSrc } from "@prismicio/client";
 import Controls from "./Controls";
 import Loading from "./Loading";
 import Preview from "./PreviewClient";
@@ -50,11 +49,15 @@ export default async function Page(props: {
   const defaultBolt =
     metals.find((metal) => metal.uid === searchParams.bolt) ?? metals[0];
 
+  // These are local static assets (see localImage() above), not real Prismic
+  // CDN images — asImageSrc() assumes an absolute images.prismic.io URL and
+  // throws "Invalid URL string" on a relative local path, so read .url
+  // directly instead of routing through Prismic's imgix URL builder.
   const wheelTextureURLs = wheels
-    .map((texture) => asImageSrc(texture.texture))
+    .map((texture) => texture.texture.url)
     .filter((url): url is string => Boolean(url));
   const deckTextureURLs = decks
-    .map((texture) => asImageSrc(texture.texture))
+    .map((texture) => texture.texture.url)
     .filter((url): url is string => Boolean(url));
 
   return (
