@@ -1,0 +1,37 @@
+{
+  "id": "page_header",
+  "name": "PageHeader",
+  "type": "SharedSlice",
+  "variations": [
+    {
+      "description": "Default",
+      "docURL": "",
+      "id": "default",
+      "imageUrl": "",
+      "name": "Default",
+      "primary": {
+        "heading": {
+          "config": {
+            "label": "Heading",
+            "single": "heading1"
+          },
+          "type": "StructuredText"
+        },
+        "body": {
+          "config": {
+            "label": "Body",
+            "multi": "paragraph,strong,em"
+          },
+          "type": "StructuredText"
+        },
+        "image": {
+          "config": {
+            "label": "Image"
+          },
+          "type": "Image"
+        }
+      },
+      "version": ""
+    }
+  ]
+}

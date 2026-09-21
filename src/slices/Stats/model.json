@@ -1,0 +1,44 @@
+{
+  "id": "stats",
+  "name": "Stats",
+  "type": "SharedSlice",
+  "variations": [
+    {
+      "description": "Default",
+      "docURL": "",
+      "id": "default",
+      "imageUrl": "",
+      "name": "Default",
+      "primary": {
+        "heading": {
+          "config": {
+            "label": "Heading",
+            "single": "heading2"
+          },
+          "type": "StructuredText"
+        },
+        "items": {
+          "config": {
+            "fields": {
+              "value": {
+                "config": {
+                  "label": "Value"
+                },
+                "type": "Text"
+              },
+              "label": {
+                "config": {
+                  "label": "Label"
+                },
+                "type": "Text"
+              }
+            },
+            "label": "Stats"
+          },
+          "type": "Group"
+        }
+      },
+      "version": ""
+    }
+  ]
+}
