@@ -155,7 +155,6 @@ function Option({
   children,
   selected,
   imageField,
-  imgixParams,
   colorField,
   onClick,
 }: OptionProps) {
