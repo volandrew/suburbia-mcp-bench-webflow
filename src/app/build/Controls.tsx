@@ -3,7 +3,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Heading } from "@/components/Heading";
 import { ColorField, ImageField, isFilled, KeyTextField } from "@prismicio/client";
-import { PrismicNextImage, PrismicNextImageProps } from "@prismicio/next";
+import { PrismicNextImageProps } from "@prismicio/next";
 import clsx from "clsx";
 import { ComponentProps, ReactNode, useEffect } from "react";
 import { useCustomizerControls } from "./context";
@@ -169,10 +169,14 @@ function Option({
         onClick={onClick}
       >
         {imageField ? (
-          <PrismicNextImage
-            field={imageField}
-            imgixParams={imgixParams}
-            className="pointer-events-none h-full w-full rounded-full"
+          // These option swatches are local fixed-asset textures (relative
+          // paths), not real Prismic images — PrismicNextImage builds an
+          // imgix URL from an absolute images.prismic.io URL and throws on a
+          // relative one, so use a plain img instead of routing through it.
+          // eslint-disable-next-line @next/next/no-img-element
+          <img
+            src={imageField.url}
+            className="pointer-events-none h-full w-full rounded-full object-cover"
             alt=""
           />
         ) : (
