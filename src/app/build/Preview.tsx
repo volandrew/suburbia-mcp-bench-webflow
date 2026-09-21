@@ -9,7 +9,6 @@ import {
   useTexture,
 } from "@react-three/drei";
 import { Canvas } from "@react-three/fiber";
-import { asImageSrc } from "@prismicio/client";
 
 import { useCustomizerControls } from "./context";
 import { Skateboard } from "@/components/Skateboard";
@@ -32,10 +31,11 @@ export default function Preview({ wheelTextureURLs, deckTextureURLs }: Props) {
   const { selectedWheel, selectedBolt, selectedDeck, selectedTruck } =
     useCustomizerControls();
 
-  const wheelTexureURL =
-    asImageSrc(selectedWheel?.texture) ?? DEFAULT_WHEEL_TEXTURE;
-  const deckTexureURL =
-    asImageSrc(selectedDeck?.texture) ?? DEFAULT_DECK_TEXTURE;
+  // These are local fixed-asset textures (relative paths), not real Prismic
+  // CDN images — read .url directly rather than through asImageSrc(), which
+  // assumes an absolute images.prismic.io URL and throws on a relative one.
+  const wheelTexureURL = selectedWheel?.texture?.url ?? DEFAULT_WHEEL_TEXTURE;
+  const deckTexureURL = selectedDeck?.texture?.url ?? DEFAULT_DECK_TEXTURE;
   const truckColor = selectedTruck?.color ?? DEFAULT_TRUCK_COLOR;
   const boltColor = selectedBolt?.color ?? DEFAULT_BOLT_COLOR;
 
